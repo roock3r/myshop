@@ -39,6 +39,8 @@ def order_create(request):
                                          product=product,
                                          price=price,
                                          quantity=item['quantity'])
+                # product.reduce_stock(item['quantity'])
+
             cart.clear()
             # launch asynchronous task
             # order_created.delay(order.id)
