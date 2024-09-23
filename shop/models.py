@@ -126,3 +126,10 @@ class Product(models.Model):
     def update_quantity(self, quantity_change):
         self.quantity += quantity_change
         self.save()
+
+    def reduce_stock(self, quantity):
+        if self.quantity >= quantity:
+            self.quantity -= quantity
+            self.save()
+        else:
+            raise ValueError('Not enough stock available')

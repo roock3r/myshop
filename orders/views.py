@@ -28,6 +28,12 @@ def order_create(request):
             order.save()
             for item in cart:
                 product = item['product']
+                # if product.quantity < item['quantity']:
+                #     return render(request, 'orders/order/create.html', {
+                #         'cart': cart,
+                #         'form': form,
+                #         'error': f'Not enough stock for {product.name}'
+                #     })
                 price = product.get_price(request.user)
                 OrderItem.objects.create(order=order,
                                          product=product,
