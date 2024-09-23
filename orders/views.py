@@ -27,9 +27,11 @@ def order_create(request):
                 order.discount = cart.coupon.discount
             order.save()
             for item in cart:
+                product = item['product']
+                price = product.get_price(request.user)
                 OrderItem.objects.create(order=order,
-                                         product=item['product'],
-                                         price=item['price'],
+                                         product=product,
+                                         price=price,
                                          quantity=item['quantity'])
             cart.clear()
             # launch asynchronous task

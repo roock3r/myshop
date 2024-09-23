@@ -77,6 +77,11 @@ def payment_status(request, payment_id):
 
         payment.status = status_mapping.get(order_status, 'Unknown')
         payment.save()
+        if payment.status == 'Fully authorized':
+            payment.status = 'Paid'
+            payment.save()
+            payment.order.paid = True
+            payment.order.save()
         return JsonResponse({'status': payment.status})
     except BelizeBankPaymentGatewayError as e:
         return JsonResponse({'error': str(e)}, status=400)
