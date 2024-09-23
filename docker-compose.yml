@@ -15,7 +15,6 @@ services:
       DEBUG: "${DEBUG}"
     env_file:
       - .env
-
   nginx:
     restart: always
     build:
@@ -27,6 +26,20 @@ services:
       - media_volume:/myshop/media
     ports:
       - "8080:80"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  celery:
+    build:
+      context: .
+    command: celery -A myshop worker --loglevel=info
+    volumes:
+      - .:/myshop
+    depends_on:
+      - rabbitmq
+
 
 volumes:
   static_volume:

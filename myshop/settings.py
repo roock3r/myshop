@@ -28,6 +28,10 @@ DEBUG = os.getenv("DEBUG", True)
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['gowireless.silvatech.bz', 'client'])
 
+# Belize Bank API
+BELIZE_BANK_USERNAME = 'BBL_Test_85-api'
+BELIZE_BANK_PASSWORD = 'BBL_SILVATECH_API!'
+BELIZE_BANK_MODE = 'test'  # Use 'prod' for production
 
 # Application definition
 
@@ -113,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Belize'
 
 USE_I18N = True
 
@@ -140,14 +144,19 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = [BASE_DIR / 'media']
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 
 CART_SESSION_ID = 'cart'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-CELERY_BROKER_URL = os.getenv("AMPQ_URL")
+CELERY_BROKER_URL = os.getenv("AMPQ_URL", "amqp://guest:guest@rabbitmq:5672//")
+CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Belize'
 
 #BrainTree
 BRAINTREE_MERCHANT_ID = os.getenv("BRAINTREE_MERCHANT_ID")  # Merchant ID
