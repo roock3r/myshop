@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-fv)@$85c4$3!jnw%dc(4_4r5b_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", True)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['gowireless.silvatech.bz'])
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['gowireless.silvatech.bz', 'client'])
 
 
 # Application definition
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db_gowireless_init.sqlite3',
     }
 }
 

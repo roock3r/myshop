@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  web:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - .:/myshop
+      - static_volume:/myshop/static
+      - media_volume:/myshop/media
+    command: >
+      sh -c "python manage.py makemigrations && python manage.py migrate && exec gunicorn myshop.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    environment:
+      DEBUG: "${DEBUG}"
+    env_file:
+      - .env
+
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    image: nginx:1.15-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/myshop/static
+      - media_volume:/myshop/media
+    ports:
+      - "8080:80"
+
+volumes:
+  static_volume:
+  media_volume:
