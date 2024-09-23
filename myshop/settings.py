@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-fv)@$85c4$3!jnw%dc(4_4r5b_w4$wk_&ff=b^tp0rr2v3cs@i')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv.get("DEBUG", True)
+DEBUG = os.getenv("DEBUG", True)
 
-ALLOWED_HOSTS = os.getenv.get("ALLOWED_HOSTS", [])
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['gowireless.silvatech.bz'])
 
 
 # Application definition
@@ -128,11 +128,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Add these new lines
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_ROOT = BASE_DIR / 'static'
 
-# STATICFILES_DIRS = (
-#     BASE_DIR / 'static',
-# )
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
 
 
 # Default primary key field type
@@ -161,3 +161,33 @@ Configuration.configure(
        BRAINTREE_PUBLIC_KEY,
        BRAINTREE_PRIVATE_KEY
 )
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "%(levelname)s %(message)s"}
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        }
+    },
+    "loggers": {
+        "shop": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+        "myshop": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
+
+AUTH_USER_MODEL = "shop.User"
